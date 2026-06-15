@@ -1,0 +1,23 @@
+{
+  "name": "replyai-backend",
+  "version": "1.0.0",
+  "description": "AI-powered lead follow-up agent for tradesmen",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node --watch app.js",
+    "demo": "node demo/demoRunner.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@sendgrid/mail": "^8.1.4",
+    "@supabase/supabase-js": "^2.49.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "node-cron": "^3.0.3",
+    "twilio": "^5.4.0",
+    "uuid": "^11.0.3"
+  }
+}
