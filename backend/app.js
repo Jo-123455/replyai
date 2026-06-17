@@ -7,6 +7,7 @@
  */
 
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const helmet = require('helmet');
 const config = require('./config');
@@ -41,6 +42,11 @@ app.use((req, res, next) => {
   next();
 });
 
+// ─── Serve Frontend Dashboard ────────────────────────────────────────────────
+
+const frontendDist = path.join(__dirname, '..', 'frontend', 'dist');
+app.use(express.static(frontendDist));
+
 // ─── Routes ──────────────────────────────────────────────────────────────────
 
 // API routes (dashboard backend)
@@ -49,14 +55,9 @@ app.use('/api', apiRoutes);
 // Webhook routes (external integrations)
 app.use('/webhooks', webhookRoutes);
 
-// Root health check
+// Root serves the React dashboard
 app.get('/', (req, res) => {
-  res.json({
-    service: 'ReplyAI Backend',
-    version: '1.0.0',
-    status: 'running',
-    docs: 'See README.md for API documentation',
-  });
+  res.sendFile(path.join(frontendDist, 'index.html'));
 });
 
 // ─── 404 Handler ─────────────────────────────────────────────────────────────
