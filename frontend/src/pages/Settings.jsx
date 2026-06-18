@@ -20,7 +20,6 @@ export default function Settings() {
     phone: '',
     email: '',
     calendly_link: '',
-    avg_job_value: '',
   })
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -44,7 +43,6 @@ export default function Settings() {
         phone: data.phone || '',
         email: data.email || '',
         calendly_link: data.calendlyLink || data.calendly_link || '',
-        avg_job_value: data.avgJobValue || data.avg_job_value || '',
       })
     } catch (err) {
       setError(err.message)
@@ -71,7 +69,6 @@ export default function Settings() {
         businessHours: form.business_hours,
         phone: form.phone,
         calendlyLink: form.calendly_link,
-        avgJobValue: form.avg_job_value,
       })
       setSuccess('Settings saved successfully')
       setTimeout(() => setSuccess(''), 3000)
@@ -206,21 +203,6 @@ export default function Settings() {
             placeholder="https://calendly.com/your-name"
           />
           <p className="text-xs text-gray-400 mt-1">Optional — share this so leads can book directly</p>
-        </div>
-
-        {/* Average Job Value */}
-        <div>
-          <label htmlFor="avg_job_value" className="block text-sm font-medium text-gray-700 mb-1">Average Job Value (£)</label>
-          <input
-            id="avg_job_value"
-            name="avg_job_value"
-            type="number"
-            value={form.avg_job_value}
-            onChange={handleChange}
-            className="input-field"
-            placeholder="e.g. 250"
-          />
-          <p className="text-xs text-gray-400 mt-1">Used to estimate your earnings from booked jobs</p>
         </div>
 
         {/* Email (readonly) */}

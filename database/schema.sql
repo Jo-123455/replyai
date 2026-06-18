@@ -11,7 +11,6 @@ CREATE TABLE IF NOT EXISTS businesses (
   phone VARCHAR(20),
   email VARCHAR(255),
   calendly_link VARCHAR(500),
-  avg_job_value DECIMAL(10,2) DEFAULT 0,
   password_hash VARCHAR(255),
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()

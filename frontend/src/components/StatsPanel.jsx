@@ -1,25 +1,20 @@
 import { useState, useEffect } from 'react'
-import { getStats, getBusiness } from '../api'
+import { getStats } from '../api'
 
 export default function StatsPanel() {
   const [stats, setStats] = useState(null)
-  const [avgJobValue, setAvgJobValue] = useState(0)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    loadData()
+    loadStats()
   }, [])
 
-  async function loadData() {
+  async function loadStats() {
     try {
-      const [statsData, businessData] = await Promise.all([
-        getStats(),
-        getBusiness().catch(() => ({})),
-      ])
-      setStats(statsData)
-      setAvgJobValue(Number(businessData.avgJobValue || businessData.avg_job_value || 0))
+      const data = await getStats()
+      setStats(data)
     } catch (err) {
-      console.error('Failed to load data:', err)
+      console.error('Failed to load stats:', err)
     } finally {
       setLoading(false)
     }
@@ -38,14 +33,28 @@ export default function StatsPanel() {
     )
   }
 
-  const booked = stats?.booked || 0
-  const estimatedRevenue = booked * avgJobValue
+  if (!stats) {
+    return (
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {[{ label: 'Total Enquiries', value: '—', color: '' },
+          { label: 'New / In Progress', value: '—', color: '' },
+          { label: 'Booked', value: '—', color: 'text-accent-600' },
+          { label: 'Response Time', value: '—', color: '' },
+        ].map(s => (
+          <div key={s.label} className="stat-card">
+            <span className="stat-label">{s.label}</span>
+            <span className={`stat-value ${s.color}`}>{s.value}</span>
+          </div>
+        ))}
+      </div>
+    )
+  }
 
   const statItems = [
-    { label: 'Total Enquiries', value: stats?.total || 0, color: '' },
-    { label: 'Booked Jobs', value: booked, color: 'text-accent-600' },
-    { label: 'Estimated Revenue', value: `£${estimatedRevenue.toLocaleString()}`, color: 'text-green-600' },
-    { label: 'Avg Response Time', value: stats?.avgResponseTime || '<5 min', color: 'text-gray-500' },
+    { label: 'Total Enquiries', value: stats.total || 0, color: '' },
+    { label: 'New / In Progress', value: (stats.new || 0) + (stats.inProgress || 0), color: 'text-yellow-600' },
+    { label: 'Booked', value: stats.booked || 0, color: 'text-accent-600' },
+    { label: 'Avg Response Time', value: stats.avgResponseTime || '<5 min', color: 'text-gray-500' },
   ]
 
   return (
