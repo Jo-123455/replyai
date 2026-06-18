@@ -135,6 +135,7 @@ router.get('/businesses/:id', async (req, res) => {
       phone: business.phone,
       email: business.email,
       calendlyLink: business.calendly_link,
+      avgJobValue: business.avg_job_value,
     });
   } catch (err) {
     console.error('[api] Get business error:', err.message);
@@ -151,6 +152,7 @@ router.patch('/businesses/:id', async (req, res) => {
     const allowedFields = [
       'business_name', 'service_type', 'tone_of_voice',
       'business_hours', 'phone', 'email', 'calendly_link',
+      'avg_job_value',
     ];
 
     const updates = {};
@@ -166,6 +168,7 @@ router.patch('/businesses/:id', async (req, res) => {
     if (req.body.toneOfVoice !== undefined) updates.tone_of_voice = req.body.toneOfVoice;
     if (req.body.businessHours !== undefined) updates.business_hours = req.body.businessHours;
     if (req.body.calendlyLink !== undefined) updates.calendly_link = req.body.calendlyLink;
+    if (req.body.avgJobValue !== undefined) updates.avg_job_value = req.body.avgJobValue;
 
     const business = await db.updateBusiness(req.params.id, updates);
     if (!business) {
