@@ -46,7 +46,7 @@ export default function Landing() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/signup" className="btn-primary text-lg px-8 py-3">
-              Start Free Trial
+              Get Started
             </Link>
             <a href="#how-it-works" className="btn-secondary text-lg px-8 py-3">
               See How It Works
@@ -104,7 +104,7 @@ export default function Landing() {
             Join hundreds of tradesmen who never miss a job. Set up in under 5 minutes.
           </p>
           <Link to="/signup" className="inline-block bg-white text-brand-700 font-semibold px-8 py-3 rounded-lg hover:bg-brand-50 transition-colors">
-            Get Started Free →
+            Get Started →
           </Link>
         </div>
       </section>
